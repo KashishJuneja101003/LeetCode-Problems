@@ -6,7 +6,7 @@ public:
         // If there are only 2 elements, return their product
         if(n==2) return skill[0]*skill[1];
 
-        sort(skill.begin(), skill.end());
+        ranges::sort(skill);
       
         long long current = skill[0]+skill[n-1];
         long long result = 0;
