@@ -9,7 +9,10 @@ public:
         ranges::sort(temp);
 
         unordered_map<int, int> myMap;
-        int rank = 1, i = 0, curr = temp[i];
+        int rank = 1;
+        int i = 0;
+        int curr = temp[i];
+        
         while(i<n){
             myMap[temp[i]] = rank++;
             curr = temp[i];
