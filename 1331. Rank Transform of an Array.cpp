@@ -8,11 +8,6 @@ public:
         vector<int>temp = arr;
         ranges::sort(temp);
 
-        // // Printing temp
-        // cout<<"Printing temp\n";
-        // for(int i:temp)cout<<" "<<i;
-        // cout<<endl;
-
         unordered_map<int, int> myMap;
         int rank = 1, i = 0, curr = temp[i];
         while(i<n){
