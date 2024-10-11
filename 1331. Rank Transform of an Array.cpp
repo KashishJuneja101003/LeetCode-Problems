@@ -6,7 +6,7 @@ public:
         if(n == 0) return {};
 
         vector<int>temp = arr;
-        sort(temp.begin(), temp.end());
+        ranges::sort(temp);
 
         // // Printing temp
         // cout<<"Printing temp\n";
