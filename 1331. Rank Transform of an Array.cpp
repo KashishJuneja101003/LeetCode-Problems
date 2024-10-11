@@ -21,7 +21,7 @@ public:
 
         // for(auto& i : myMap)cout<<"key: "<<i.first<<", value: "<<i.second<<endl;
         
-        for(int i = 0; i<n; i++) arr[i] = myMap[arr[i]];
+        for(i = 0; i<n; i++) arr[i] = myMap[arr[i]];
 
         return arr;
     }
