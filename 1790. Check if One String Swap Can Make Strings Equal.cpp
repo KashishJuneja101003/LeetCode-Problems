@@ -1,24 +1,21 @@
 class Solution {
 public:
     bool areAlmostEqual(string s1, string s2) {
-        vector<int> diffIndices;
-
-        for(int i=0; i<s1.size(); i++){
-            if(s1[i] != s2[i]){
-                diffIndices.push_back(i);
-            }
-        }
-
-        if (diffIndices.size() == 0){
+        if(s1 == s2){
             return true;
         }
 
-        if(diffIndices.size() != 2){
-            return false;
+        int left = 0, right = s1.size()-1;
+
+        while(s1[left] == s2[left]){
+            left++;
+        }
+        while(s1[right] == s2[right]){
+            right--;
         }
 
-        int i=diffIndices[0], j=diffIndices[1];
+        swap(s2[left], s2[right]);
 
-        return s1[i]==s2[j] && s1[j]==s2[i];
+        return s1==s2;
     }
 };
