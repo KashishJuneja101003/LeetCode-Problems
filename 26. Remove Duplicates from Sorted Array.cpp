@@ -1,17 +1,35 @@
+// Brute Force Approach
+/*
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        int currentElement = nums[0];
-        int currentIndex = 0;
-        int idx = 1;
-        while(idx != nums.size()){
-            if(nums[idx] != currentElement){
-                swap(nums[++currentIndex], nums[idx]);
-                currentElement = nums[currentIndex];
-            }
-            idx++;
+        set<int> s;
+        for(int i:nums){
+            s.insert(i);
         }
-        
-        return currentIndex+1;
+
+        int idx = 0;
+        for(int i:s){
+            nums[idx++] = i;
+        }
+
+        return idx;
+    }
+};
+*/
+
+// Two Pointers Approach
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int i=0;
+
+        for(int j=1; j<nums.size(); j++){
+            if(nums[i] != nums[j]){
+                nums[++i] = nums[j];
+            }
+        }
+
+        return i+1;
     }
 };
