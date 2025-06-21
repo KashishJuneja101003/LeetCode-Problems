@@ -1,27 +1,67 @@
+// Approach 1: Brute Force TC: O(n^2) SC: O(1)
+/*
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        // Initialize pointers at the start and end of the array
-        int leftPtr = 0, rightPtr = nums.size()-1;
+        int n = nums.size();
 
-        // Loop until the pointers meet
-        while(leftPtr < rightPtr){
-            // Calculate the sum of elements at the pointers
-            int sum = nums[leftPtr] + nums[rightPtr];
-
-            // If sum matches the target, break the loop
-            if(sum == target){
-                break;
-            } else if (sum < target){
-                // If sum is less, move the left pointer to increase the sum
-                leftPtr++;
-            } else {
-                // If sum is more, move the right pointer to decrease the sum
-                rightPtr--;
+        for(int i=0; i<n; i++){
+            for(int j=i+1; j<n; j++){
+                if(nums[i] + nums[j] == target){
+                    return {i+1, j+1};
+                }
             }
         }
 
-        // Return the 1-indexed positions of the two numbers
-        return {leftPtr + 1, rightPtr + 1};
+        return {};
+    }
+};
+*/
+
+// Approach 2: Using Hashmap TC: O(n) SC: O(n)
+/*
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        unordered_map<int, int> el_idx;
+
+        for(int i=0; i<n; i++){
+            int rem = target-nums[i];
+
+            if(el_idx.find(rem) != el_idx.end()){
+                return {el_idx[rem]+1, i+1};
+            }
+
+            el_idx[nums[i]] = i;
+        }
+
+        return {};
+    }
+};
+*/
+
+// Approach 3: Two Pointers TC: O(n) SC: O(1)
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n = nums.size();
+
+        int left = 0;
+        int right = n-1;
+
+        while(left < right){
+            int sum = nums[left]+nums[right];
+
+            if(sum == target){
+                return {left+1, right+1};
+            } else if (sum < target){
+                left++;
+            } else {
+                right--;
+            }
+        }
+        
+        return {};
     }
 };
