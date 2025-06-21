@@ -1,27 +1,26 @@
+// Approach 1: Using Stacks TC: O(n) SC: O(n)
 class Solution {
 public:
     bool isValid(string s) {
-        if(s.size() == 1) return false;
-
-        stack<char> st;
+        stack<char> stk;
 
         for(char c:s){
-            if(c == '(' || c == '{' || c == '['){
-                st.push(c);
-            } else{
-                if(st.empty()){
-                    return false;
-                }
+            if(c == '(' || c == '{' || c == '[') {
+                stk.push(c); continue;
+            } else {
+                if(stk.empty()) return false;
 
-                char top = st.top();
-                st.pop();
-
-                if((c == ')' && top != '(') || (c == ']' && top != '[') || (c == '}' && top != '{')){
-                    return false;
-                }
+                char top = stk.top();
+                
+                if (c == ')' && top != '(') return false;
+                if (c == '}' && top != '{') return false;                
+                if (c == ']' && top != '[') return false;
+                
+                stk.pop();
             }
+
         }
 
-        return st.empty();
+        return stk.empty();
     }
 };
