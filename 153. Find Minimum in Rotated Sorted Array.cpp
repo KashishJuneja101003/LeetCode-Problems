@@ -1,23 +1,33 @@
+// Approach 1: Linear Search TC: O(n) SC: O(1)
+/*
 class Solution {
 public:
     int findMin(vector<int>& nums) {
-        int n = nums.size(), st = 0, end = n-1, minEl = INT_MAX;
-        
-        while(st <= end){
-            int mid = st+(end-st)/2;
+        int num = nums[0];
+        for(int i:nums) num = min(i, num);
+        return num;
+    }
+};
+*/
 
-            minEl = min(minEl, nums[mid]);
+// Approach 2: Binary Search TC: O(log n) SC: O(1)
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int n = nums.size();
+        int l = 0;
+        int r = n-1;
 
-            // Right Half Having Smaller Elements than Left Half
-            if(nums[end] < nums[mid]){
-                st = mid+1;
-            }
-            // Left Half Having Smaller Elements than Right Half
-            else{
-                end = mid-1;
-            }
+        // l < r is taken bcz l <= r would make it an infinte loop
+        while(l < r){
+            int m = l + (r-l)/2;
+
+            // If nums[m] > nums[r], min element exists in right half
+            if(nums[m] > nums[r]) l = m+1;
+            // Else min element exists either in left half or at mid, that's why r=m
+            else r = m;
         }
 
-        return minEl;
+        return nums[l];
     }
 };
