@@ -1,23 +1,32 @@
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        int n = nums.size(), start = 0, end = n-1;
+        int n = nums.size();
+        int l = 0;
+        int r = n-1;
 
-        while(start <= end){
-            int mid = start + (end - start)/2;
+        while(l <= r){
+            int mid = l + (r-l)/2;
 
-            if (nums[mid] == target) return mid;
-            else if(nums[start] <= nums[mid])   // If the left half is sorted, go to left
-            {
-                if(nums[start] <= target && nums[mid] >= target) end = mid-1; //Target must lie in the given range
-                else start = mid+1; // Go to RHS
+            if(nums[mid] == target) return mid;
+
+            // Left half is sorted
+            if(nums[l] <= nums[mid]){
+                // If target lies in left half move to left half, r = mid-1
+                if(nums[l] <= target && target <= nums[mid]) r = mid-1;
+                // Else move to right half, l = mid+1
+                else l = mid+1;
             }
-            else    // If the right half is sorted, go to right
-            {
-                if(nums[mid] <= target && nums[end] >= target) start = mid+1; //Target must lie in the given range
-                else end = mid-1;   // Go to LHS
+
+            // Right half is sorted
+            else{
+                // If target lies in right half move to right half, l = mid+1
+                if(nums[mid] <= target && target <= nums[r]) l = mid+1;
+                // Else move to left half, r = mid-1
+                else r = mid-1;
             }
         }
+
         return -1;
     }
 };
