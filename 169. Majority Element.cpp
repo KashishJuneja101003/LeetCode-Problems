@@ -1,14 +1,17 @@
+
+// Moore's Algorithm TC: O(n) SC: O(1)
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        // Moore's Algorithm
-        int freq=0, result=0;
-        for(int i=0; i<nums.size(); i++){
-            if(freq == 0) result = nums[i];
+        int freq = 0;
+        int cand = nums[0];
 
-            if(nums[i] == result) freq++;
+        for(int i:nums){
+            if(freq == 0) cand = i;
+            if(cand == i) freq++;
             else freq--;
         }
-        return result;
+
+        return cand;
     }
 };
