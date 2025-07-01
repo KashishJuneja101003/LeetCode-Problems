@@ -1,53 +1,66 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
+// Approach 1: TC: O(n) SC: O(n)
+/*
 class Solution {
 public:
-    ListNode* reverseList(ListNode* head){
-        if(head == nullptr || head->next == nullptr){
-            return head;
+    bool isPalindrome(ListNode* head) {
+        vector<int> revnum;
+        ListNode* temp = head;
+
+        while(temp != nullptr){
+            revnum.push_back(temp->val);
+            temp = temp->next;
         }
-        
-        ListNode *prev = nullptr, *curr = head, *next = nullptr;
-        
+
+        temp = head;
+        for(int i=revnum.size()-1; i>=0; i--){
+            if(revnum[i] != temp->val) return false;
+            temp = temp->next;
+        }
+
+        return true;
+    }
+};
+*/
+
+// Approach 2: TC: O(n) SC: O(1)
+class Solution {
+public:
+    ListNode* reverse(ListNode* head) {
+        ListNode* prev = nullptr;
+        ListNode* curr = head;
+        ListNode* next = nullptr;
+
         while(curr != nullptr){
             next = curr->next;
             curr->next = prev;
             prev = curr;
             curr = next;
         }
-        head = prev;
-        return head;
+
+        return prev;
     }
 
     bool isPalindrome(ListNode* head) {
-        if(head == nullptr || head->next == nullptr){
-            return true;
-        }
+        if(head == nullptr || head->next == nullptr) return true;
 
-        ListNode* slow = head, *fast = head;
-        
+        // Find middle node
+        ListNode* slow = head;
+        ListNode* fast = head;
         while(fast != nullptr && fast->next != nullptr){
             slow = slow->next;
             fast = fast->next->next;
         }
 
-        fast = reverseList(slow);
-        slow = head;
+        // Reverse nodes after middle
+        ListNode* revHead = reverse(slow);
 
-        while(fast != nullptr){
-            if(slow->val != fast->val){
-                return false;
-            }
-            slow = slow->next;
-            fast = fast->next;
+        // Check if the list is palindrome
+        ListNode* first = head;
+        ListNode* second = revHead;
+        while(second != nullptr){
+            if(second->val != first->val) return false;
+            second = second->next;
+            first = first->next;
         }
         return true;
     }
