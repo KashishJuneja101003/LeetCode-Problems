@@ -19,6 +19,7 @@ public:
 */
 
 // Approach 2: Two Pointers TC: O(n) SC: O(1)
+/*
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
@@ -40,6 +41,26 @@ public:
             }
 
             swap(nums[currZero], nums[currNonZero]);
+        }
+    }
+};
+*/
+
+// Approach 3: Single Pass (without swap) TC: O(n) SC: O(1)
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int insertPos = 0;
+        int n = nums.size();
+
+        for(int i=0; i<n; i++){
+            if(nums[i] != 0){
+                nums[insertPos++] = nums[i];
+            }
+        }
+
+        while(insertPos < n){
+            nums[insertPos++] = 0;
         }
     }
 };
