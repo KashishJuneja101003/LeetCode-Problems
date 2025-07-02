@@ -1,3 +1,24 @@
+// Approach 1: Brute Force (Not in-place) TC: O(n) SC: O(n)
+/*
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> nums1(n, 0);
+        int idx = 0;
+        for(int i:nums){
+            if(i != 0) nums1[idx++] = i;
+        }
+        idx = 0;
+        for(int i:nums1){
+            nums[idx] = nums1[idx];
+            idx++;
+        }
+    }
+};
+*/
+
+// Approach 2: Two Pointers TC: O(n) SC: O(1)
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
