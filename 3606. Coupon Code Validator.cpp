@@ -1,4 +1,4 @@
-// Approach 1: TC: O(n * (k + log n)) SC: O(n*k)
+// Approach 1: TC: O(n * log n) SC: O(n*k)
 class Solution {
 public:
     bool isValid(string code){
