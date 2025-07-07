@@ -1,3 +1,4 @@
+// Approach 1: TC: O(n) SC: O(n)
 class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
@@ -24,5 +25,37 @@ public:
         }
 
         return ans;
+    }
+};
+
+// Approach 2: TC: O(n) SC: O(n)
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if(root == nullptr) return {};
+        
+        queue<TreeNode*> q;
+        vector<vector<int>> order;
+        vector<int> temp;
+
+        q.push(root);
+        q.push(nullptr);
+        while(q.size() > 1){
+            TreeNode* curr = q.front(); q.pop();
+            temp.push_back(curr->val);
+
+            if(curr->left) q.push(curr->left);
+            if(curr->right) q.push(curr->right);
+
+            if(q.front() == nullptr) {
+                q.push(nullptr);
+                q.pop();
+                order.push_back(temp);
+                temp = {};
+                continue;
+            }            
+        }
+
+        return order;
     }
 };
