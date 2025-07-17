@@ -1,3 +1,4 @@
+// Approach 1: Prim's Algorithm
 class Solution {
 public:
     typedef pair<int, int> P;
@@ -42,5 +43,69 @@ public:
         }
 
         return sum;
+    }
+};
+
+// Approach 2: Kruskal's Algorithm
+class Solution {
+public:
+    int Find(int i, vector<int>& parent){
+        if(i == parent[i]) return i;
+        return parent[i] = Find(parent[i], parent);
+    }
+
+    void Union(int x, int y, vector<int>& parent, vector<int>& rank){
+        int xp = Find(x, parent);
+        int yp = Find(y, parent);
+
+        if(xp == yp) return;
+
+        if(rank[xp] < rank[yp]) parent[xp] = yp;
+        else if(rank[yp] < rank[xp]) parent[yp] = xp;
+        else{
+            parent[xp] = yp;
+            rank[yp]++;
+        }
+    }
+
+    int Kruskal(vector<vector<int>>& adj, vector<int>& parent, vector<int>& rank){
+        int sum = 0;
+        for(auto& vec:adj){
+            int u = vec[0];
+            int v = vec[1];
+            int wt = vec[2];
+
+            if(Find(u, parent) == Find(v, parent)) continue;
+
+            Union(u, v, parent, rank);
+            sum += wt; 
+        }
+
+        return sum;
+    }
+
+    int minCostConnectPoints(vector<vector<int>>& points) {
+        int V = points.size();
+        vector<int> parent(V);
+        vector<int> rank(V, 0);
+
+        for(int i=0; i<V; i++) parent[i] = i;
+
+        vector<vector<int>> adj;
+
+        for(int i=0; i<V; i++){
+            for(int j=i+1; j<V; j++){
+                int dist = abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]);
+                adj.push_back({i, j, dist});
+            }
+        }
+
+        auto comparator = [&](auto& v1, auto& v2){
+            return v1[2] < v2[2];
+        };
+
+        sort(adj.begin(), adj.end(), comparator);
+
+        return Kruskal(adj, parent, rank);
     }
 };
