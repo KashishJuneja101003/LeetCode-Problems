@@ -1,5 +1,4 @@
 // Approach 1: Recursion TC: O(2^n) SC: O(n)
-/*
 class Solution {
 public:
     int solve(vector<int>& arr, int idx, int n){
@@ -15,7 +14,6 @@ public:
         return solve(nums, 0, n);
     }
 };
-*/
 
 // Approach 2: Top Down (Recursion + Memoization) TC: O(n) SC: O(n) + Recursive stack
 class Solution {
@@ -49,15 +47,40 @@ public:
         int n = nums.size();
         if(n == 1) return nums[0];
 
-        vector<int> maxAmt(n+1, 0);
-        maxAmt[0] = 0;
-        maxAmt[1] = nums[0];
-        
-        for(int i=2; i<=n; i++){
-            int steal = nums[i-1] + maxAmt[i-2];
-            int skip = maxAmt[i-1];
-            maxAmt[i] = max(steal, skip);
+        vector<int> dp(n);
+        dp[0] = nums[0];
+        dp[1] = max(nums[0], nums[1]);
+
+        for(int i=2; i<n; i++){
+            int rob = dp[i-2] + nums[i];
+            int notRob = dp[i-1];
+
+            dp[i] = max(rob, notRob);
         }
-        return maxAmt[n];
+
+        return dp[n-1];
+    }
+};
+
+// Space Optimized TC: O(n) SC: O(1)
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 1) return nums[0];
+
+        int secondLast = nums[0];
+        int last = max(nums[0], nums[1]);
+
+        for(int i=2; i<n; i++){
+            int rob = secondLast + nums[i];
+            int notRob = last;
+
+            int curr = max(rob, notRob);
+            secondLast = last;
+            last = curr;
+        }
+
+        return last;
     }
 };
