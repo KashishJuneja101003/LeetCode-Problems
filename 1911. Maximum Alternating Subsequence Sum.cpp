@@ -1,5 +1,4 @@
 // Approach 1: Recursion TC: (n 2^n) SC: O(n)
-/*
 class Solution {
 public:
     void solve(vector<int>& arr, vector<int>& temp, int idx, long long& maxSum){
@@ -31,7 +30,6 @@ public:
         return maxSum;
     }
 };
-*/
 
 // Approach 2: Recursive + Memoization TC: O(2n) = O(n)  SC: O(n)
 class Solution {
@@ -55,5 +53,24 @@ public:
         vector<vector<long long>> dp(n, vector<long long>(2, -1));
 
         return solve(nums, 0, 1, dp);
+    }
+};
+
+// Tabulation TC: O(n) SC: O(n)
+class Solution {
+public:
+    typedef long long ll;
+    long long maxAlternatingSum(vector<int>& nums) {
+        int n = nums.size();
+        int even = 0;
+        int odd = 1;
+        vector<vector<ll>> dp(n + 1, vector<ll>(2, 0));
+
+        for (int i = 1; i <= n; i++) {
+            dp[i][even] = max(dp[i - 1][odd] - nums[i - 1], dp[i - 1][even]);
+            dp[i][odd] = max(dp[i - 1][even] + nums[i - 1], dp[i - 1][odd]);
+        }
+
+        return max(dp[n][odd], dp[n][even]);
     }
 };
