@@ -1,5 +1,4 @@
 // Approach 1: Recursion TC: O(2^n) SC: O(1)
-/*
 class Solution {
 public:
     void solve(vector<vector<int>>& pairs, int index, int currEnd, int currChain, int& maxChain) {
@@ -19,8 +18,6 @@ public:
         return maxChain;
     }
 };
-*/
-
 
 // Approach 2: Greedy TC: O(n logn) SC: O(1)
 class Solution {
@@ -41,5 +38,31 @@ public:
         }
 
         return chainLength;
+    }
+};
+
+// Tabulation TC: O(n log n) SC: O(n)
+class Solution {
+public:
+    int findLongestChain(vector<vector<int>>& pairs) {
+        int n = pairs.size();
+        if(n == 1) return 1;
+
+        sort(pairs.begin(), pairs.end());
+        
+        vector<int> dp(n, 1);
+        
+        int maxLen = 1;
+
+        for(int i=1; i<n; i++){
+            for(int j=0; j<i; j++){
+                if(pairs[j][1] < pairs[i][0]){
+                    dp[i] = max(dp[i], dp[j]+1);
+                }
+            }
+            maxLen = max(maxLen, dp[i]);
+        }
+
+        return maxLen;
     }
 };
