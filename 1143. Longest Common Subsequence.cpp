@@ -27,23 +27,25 @@ public:
 // Memoization TC: O(m*n) SC: O(m*n) + O(m+n)
 class Solution {
 public:
-    int LCS(string s1, int i1, string s2, int i2, vector<vector<int>> dp){
-        if(i1 < 0 || i2 < 0) return 0;
-        if(dp[i1][i2] != -1) return dp[i1][i2];
+    int longestCommonSubsequence(string text1, string text2) {
+        int n1 = text1.size();
+        int n2 = text2.size();
 
-        int match = 0;
-        int notMatch = 0;
+        string str = "";
 
-        if(s1[i1] == s2[i2]){
-            match = 1 + LCS(s1, i1-1, s2, i2-1, dp);
-        } else{
-            int reduce1 = LCS(s1, i1-1, s2, i2, dp);
-            int reduce2 = LCS(s1, i1, s2, i2-1, dp);
+        vector<vector<int>> dp(n1 + 1, vector<int>(n2 + 1, 0));
 
-            notMatch = max(reduce1, reduce2);
+        for(int i=1; i<=n1; i++){
+            for(int j=1; j<=n2; j++){
+                if(text1[i-1] == text2[j-1]){
+                    dp[i][j] = dp[i-1][j-1]+1;
+                } else {
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+                }
+            }
         }
 
-        return dp[i1][i2] = max(match, notMatch);
+        return dp[n1][n2];
     }
 
     int longestCommonSubsequence(string text1, string text2) {
