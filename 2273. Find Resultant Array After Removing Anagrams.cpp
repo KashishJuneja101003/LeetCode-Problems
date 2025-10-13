@@ -1,3 +1,4 @@
+// TC: O(n * k) SC: O(1)
 class Solution {
 public:
     bool isAnagram(string& a, string& b) {
@@ -34,3 +35,5 @@ public:
         return ans;
     }
 };
+
+// TC: O(n * k log k) SC: O(k)
